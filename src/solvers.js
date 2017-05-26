@@ -40,7 +40,7 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   var newBoard = new Board({n: n});
   var solutionCount = 0;
-
+/////////////////////////
   // let r = 0;
 
   // var recursion = function(r) {
@@ -57,22 +57,21 @@ window.countNRooksSolutions = function(n) {
   //     } 
   //     newBoard.togglePiece(r, c);
   //   }
-
+//////////////////////////////
 
  
   let r = 0;
   var recursion = function(r) {
-    for (var c = 0; c < newBoard.rows()[r].length; c++) { 
+    for (var c = 0; c < n; c++) { 
       newBoard.togglePiece(r, c); // toggle on
-      if (newBoard.hasAnyRooksConflicts()) { // if conflict toggle off
-        newBoard.togglePiece(r, c);
+      if (!newBoard.hasAnyRooksConflicts()) { // if conflict toggle off
+        recursion(r + 1);
       } else {  // no conflict, recurse into branch
-        if (r < (n - 1)) {  // number of rows less than total rows available
-          return recursion(r + 1);
-        } else if (r === (n - 1)) {  // number of rows less than total rows available
+        if (r === n) {  // number of rows less than total rows available
           solutionCount++;
         }
       }
+      newBoard.togglePiece(r, c);
     }
     
    
